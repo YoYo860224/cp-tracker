@@ -1,0 +1,6 @@
+[submodule "cp-tracker-fe"]
+	path = cp-tracker-fe
+	url = https://github.com/YoYo860224/cp-tracker-fe
+[submodule "cp-tracker-be"]
+	path = cp-tracker-be
+	url = https://github.com/YoYo860224/cp-tracker-be
