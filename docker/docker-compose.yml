@@ -1,1 +1,61 @@
-# TBD
+version: '3.8'
+services:
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: cp_tracker
+    ports:
+      - "27017:27017"
+    volumes:
+      - ../cp-tracker-be/database/initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - cp-tracker-network
+
+  be:
+    build:
+      context: ../cp-tracker-be
+    image: yoyo860224/cp-tracker-be
+    container_name: cp-tracker-be
+    restart: always
+    environment:
+      - GIN_MODE=release
+      - MONGO_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017
+    depends_on:
+      - mongo
+    ports:
+      - "8080:8080"
+    networks:
+      - cp-tracker-network
+
+  fe:
+    build:
+      context: ../cp-tracker-fe
+    image: yoyo860224/cp-tracker-fe
+    container_name: cp-tracker-fe
+    restart: always
+    ports:
+      - "4200:80"
+    networks:
+      - cp-tracker-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: cp-tracker-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - cp-tracker-network
+    depends_on:
+      - be
+      - fe
+
+networks:
+  cp-tracker-network:
+    driver: bridge
