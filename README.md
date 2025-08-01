@@ -16,6 +16,7 @@ docker-compose -p cp-tracker up -d --build
 | ------------------- | --------------------------------------------- |
 | GCP_ARTIFACT_REGION | Google Cloud Artifact Registry region         |
 | GCP_PROJECT_ID      | Google Cloud Project ID                       |
+| GCP_PROJECT_NO      | Google Cloud Project Number                   |
 | GCP_RUN_REGION      | Google Cloud Run region                       |
 | GCP_SA_KEY          | The json key for Google Cloud Service Account |
 
