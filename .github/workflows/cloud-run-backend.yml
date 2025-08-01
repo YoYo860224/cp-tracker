@@ -41,4 +41,5 @@ jobs:
             --region=${{ secrets.GCP_RUN_REGION }} \
             --platform=managed \
             --allow-unauthenticated \
-            --set-env-vars=ALLOW_ORIGINS=${{ vars.GO_ALLOW_ORIGINS }},JWT_SECRET=${{ secrets.GO_JWT_SECRET }},MONGO_URI=${{ secrets.GO_MONGO_URI }}
+            --set-env-vars=ALLOW_ORIGINS=${{ vars.GO_ALLOW_ORIGINS }}
+            --update-secrets=JWT_SECRET=projects/${{ secrets.GCP_PROJECT_ID }}/secrets/JWT_SECRET:latest,MONGO_URI=projects/${{ secrets.GCP_PROJECT_ID }}/secrets/MONGO_URI:latest
